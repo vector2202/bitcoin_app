@@ -29,7 +29,7 @@ def load_data(file_name=None)-> pd.DataFrame:
         df = pd.read_csv(file_name, parse_dates=["Date"])
     else:
         get_btc_data()
-        df = pd.read_csv("data/input.csv", parse_dates=["Date"])
+        df = pd.read_csv("data/btc_raw.csv", parse_dates=["Date"])
     df = df.set_index("Date")
     df = df[pd.to_numeric(df['Close'], errors='coerce').notna()]
     df['Close'] = df['Close'].astype(float)
