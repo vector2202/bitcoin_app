@@ -124,17 +124,18 @@ final_model.fit(X_scaled[:-30], y.iloc[:-30])
 y_pred = final_model.predict(X_scaled[-30:])
 y_true = y.iloc[-30:]
 
-# Métricas
 rmse = np.sqrt(mean_squared_error(y_true, y_pred))
 mae = mean_absolute_error(y_true, y_pred)
 mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
-st.markdown("### Métricas de Desempeño (últimos 30 días)")
+
+
+st.markdown("### desempeño (ultimso 30 dias)")
 st.write(f"**RMSE:** {rmse:.2f}")
 st.write(f"**MAE:** {mae:.2f}")
-st.write(f"**MAPE:** {mape:.2f}%")
+st.write(f"**MAPE:** {mape:.2f}%") 
 
-st.subheader("Predicción vs Real (últimos 30 días)")
+st.subheader("prediccion vs real (ultimos 30 dias)")
 fig2, ax2 = plt.subplots(figsize=(12, 5))
 ax2.plot(y_true.index, y_true, label="Real")
 ax2.plot(y_true.index, y_pred, label="Predicción", alpha=0.8)
@@ -144,14 +145,14 @@ ax2.grid()
 st.pyplot(fig2)
 
 
-st.subheader("Importancia de las Variables")
+st.subheader("Que tanto influyen ?")
 importances = pd.Series(final_model.feature_importances_, index=cols).sort_values()
 fig3, ax3 = plt.subplots(figsize=(8, 6))
 importances.plot(kind="barh", ax=ax3)
 ax3.grid()
 st.pyplot(fig3)
 
-st.subheader("Configurar Predicción")
+st.subheader("Personalizar prediccion")
 min_date = df.index[30]  # para asegurar que haya datos anteriores suficientes
 max_date = df.index[-1]
 default_date = max_date - timedelta(days=10)
