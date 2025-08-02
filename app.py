@@ -163,7 +163,7 @@ try:
     start_idx = df.index.get_loc(pd.to_datetime(selected_date))
     X_pred = X_scaled[start_idx : start_idx + days_to_predict]
     y_real = y.iloc[start_idx : start_idx + days_to_predict]
-    y_forecast = best_model.predict(X_pred)
+    y_forecast = final_model.predict(X_pred)
 
     st.subheader(f"Predicción vs Real desde {selected_date} por {days_to_predict} días")
     fig4, ax4 = plt.subplots(figsize=(12, 5))
