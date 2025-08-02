@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import yfinance as yf
 
 from datetime import datetime, timedelta
 from sklearn.model_selection import TimeSeriesSplit
@@ -17,10 +18,17 @@ file_name = st.sidebar.file_uploader("Sube un archivo CSV con datos de Bitcoin",
 
 @st.cache_data
 
+def get_btc_data(start='2014-01-01', end='2024-12-31'):
+    btc = yf.download("BTC-USD", start=start, end=end)
+    btc.reset_index(inplace=True)
+    btc.to_csv("data/btc_raw.csv", index=False)
+    return btc
+    
 def load_data(file_name=None)-> pd.DataFrame:
     if file_name:
         df = pd.read_csv(file_name, parse_dates=["Date"])
     else:
+        get_btc_data()
         df = pd.read_csv("data/input.csv", parse_dates=["Date"])
     df = df.set_index("Date")
     df = df[pd.to_numeric(df['Close'], errors='coerce').notna()]
